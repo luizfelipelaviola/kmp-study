@@ -1,5 +1,23 @@
+// Get the command line arguments from process.argv
+const args = process.argv.slice(2);
+
+// Initialize variables to store the values of -p and -t parameters
+let pValue = null;
+let tValue = null;
+
+// Loop through the command line arguments and look for -p and -t parameters
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === '-p' && i + 1 < args.length) {
+    // If -p is found and there's a value after it, store it in pValue
+    pValue = args[i + 1];
+  } else if (args[i] === '-t' && i + 1 < args.length) {
+    // If -t is found and there's a value after it, store it in tValue
+    tValue = args[i + 1];
+  }
+}
+
 // https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
-  
+
 function computeLPSArray(pat, M, lps)
 {
     // length of the previous longest prefix suffix
@@ -92,7 +110,7 @@ function KMPSearch(pat,txt)
     }
 }
 
-var txt = "ABABDABACDABABCABAB";
-var pat = "ABABCABAB";
+var txt = tValue || "ABABDABACDABABCABAB";
+var pat = pValue || "ABABCABAB";
 
 KMPSearch(pat, txt);
