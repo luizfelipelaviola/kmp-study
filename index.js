@@ -18,6 +18,50 @@ for (let i = 0; i < args.length; i++) {
 
 // https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
 
+function bruteForce(txt, pat)
+{
+    console.log('===== BRUTE FORCE =====')
+    let M = pat.length;
+    let N = txt.length;
+    var results = [];
+ 
+    /* A loop to slide pat one by one */
+    for (let i = 0; i <= N - M; i++) {
+        let j;
+ 
+        /* For current index i, check for pattern 
+        match */
+        for (j = 0; j < M; j++)
+            if (txt[i + j] != pat[j])
+                break;
+ 
+        // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
+        if (j == M) {
+            console.log("Pattern found at index " + i);
+            results.push(i);
+        }
+    }
+
+    if(results.length) {
+        console.log("Completed. Found pattern at indexes: " + results.join(', '));
+        console.log("Total matches: " + results.length);
+        console.log(txt)
+        for(var i = 0; i < txt.length; i++) {
+            if(results.includes(i)) {
+              for(var j = 0; j < pat.length; j++) {
+                process.stdout.write('^');
+              }
+              i += pat.length - 1;
+            } else {
+                process.stdout.write(' ');
+            }
+        }
+    } else {
+        console.log("Completed. No matches found.");
+    }
+    console.log('\n===== BRUTE FORCE =====')
+}
+
 function computeLPSArray(pat, M, lps)
 {
     // length of the previous longest prefix suffix
@@ -58,6 +102,7 @@ function computeLPSArray(pat, M, lps)
   
 function KMPSearch(pat,txt)
 {
+    console.log('===== KMP =====')
     var N = txt.length;
     var M = pat.length;
   
@@ -76,6 +121,7 @@ function KMPSearch(pat,txt)
             j++;
             i++;
         }
+
         if (j == M) {
             console.log("Found pattern " + "at index " + (i - j) + "\n");
             results.push(i-j);
@@ -107,10 +153,24 @@ function KMPSearch(pat,txt)
                 process.stdout.write(' ');
             }
         }
+    } else {
+        console.log("Completed. No matches found.");
     }
+    console.log('\n===== KMP =====')
 }
 
 var txt = tValue || "ABABDABACDABABCABAB";
 var pat = pValue || "ABABCABAB";
 
+const startTimeBruteForce = performance.now();
+bruteForce(txt, pat);
+const endTimeBruteForce = performance.now();
+const executionTimeBruteForce = endTimeBruteForce - startTimeBruteForce;
+
+const startTimeKMP = performance.now();
 KMPSearch(pat, txt);
+const endTimeKMP = performance.now();
+const executionTimeKMP = endTimeKMP - startTimeKMP;
+
+console.log("Execution time (bruteForce): " + executionTimeBruteForce + " milliseconds");
+console.log("Execution time (KMPSearch): " + executionTimeKMP + " milliseconds");
