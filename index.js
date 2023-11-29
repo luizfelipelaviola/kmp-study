@@ -58,8 +58,8 @@ function computeLPSArray(pat, M, lps)
   
 function KMPSearch(pat,txt)
 {
-    var M = pat.length;
     var N = txt.length;
+    var M = pat.length;
   
     // create lps[] that will hold the longest
     // prefix suffix values for pattern
@@ -89,7 +89,7 @@ function KMPSearch(pat,txt)
             if (j != 0)
                 j = lps[j - 1];
             else
-                i = i + 1;
+                i++;
         }
     }
 
